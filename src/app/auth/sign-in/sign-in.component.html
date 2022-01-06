@@ -1,0 +1,44 @@
+<form (submit)="onSignIn(signInForm)"
+        #signInForm="ngForm">
+  
+  <div
+    class="border d-flex form-box align-items-center justify-content-center"
+    style="height: 50%"
+  >
+    <form class="form">
+      <div class="form-group">
+        <h2 class="text-center">Sign in</h2>
+      </div>
+
+      <div class="form-group">
+        <input
+          class="form-control"
+          name="email"
+          ngModel
+          type="email"
+          #emailInput="ngModel"
+          [(ngModel)]="email_address"
+          email
+          placeholder="Username" required>
+      </div>
+
+      <div class="form-group">
+        <input
+          class="form-control"
+          [(ngModel)]="password"
+          ngModel
+          type="password"
+          minlength="8"
+          #passwordInput="ngModel"
+          required
+          name="password" placeholder="Password" >
+      </div>
+
+      <div class="row">
+        <div class="text-center col-sm-12">
+          <button class="btn btn-primary" routerLink="dashboard">Sign In</button>
+          <button class="btn btn-danger" routerLink="">Cancel</button>
+        </div>
+      </div>
+
+</form> 

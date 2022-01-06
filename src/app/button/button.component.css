@@ -1,0 +1,13 @@
+a {
+  width: 20%;
+  height: 3rem;
+  line-height: 50px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+a:hover {
+  box-shadow: 0 0 11px rgba(255, 255, 255, 1);
+}
