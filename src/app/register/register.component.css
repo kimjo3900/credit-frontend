@@ -1,0 +1,30 @@
+.form-box {
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  height: auto;
+  margin-top: 5%;
+}
+.stepper {
+  background-color: lightgrey;
+  border-style: solid;
+  border-width: thick;
+  border-color: #673ab7;
+}
+.container .mat-form-field + .mat-form-field {
+  margin-left: 10px;
+}
+.container {
+  align-items: center;
+}
+.triple {
+  width: 32%;
+}
+.double {
+  width: 49%;
+}
+.unstyled::-webkit-inner-spin-button,
+.unstyled::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}

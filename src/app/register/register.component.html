@@ -1,0 +1,520 @@
+<form id="signup" (submit)="onSignup(signupForm)" #signupForm="ngForm">
+
+<div
+  class="container d-flex form-box align-items-center justify-content-center"
+>
+  <mat-stepper class="stepper">
+
+    <mat-step [stepControl]="basicInfo" errorMessage="Inputs missing">
+      <ng-template matStepLabel>Basic Information</ng-template>
+
+      <p>
+        Please provide this basic information about yourself. All fields are
+        required unless otherwise stated.
+      </p>
+
+      <form [formGroup]="basicInfo">
+        <div class="form-group" style="display: inline-block; width: 100%">
+          <!--First Name-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>First Name</mat-label>
+            <input
+              matInput
+              ngModel
+              [(ngModel)]="fName"
+              placeholder="John"
+              class="input"
+              formControlName="fName"
+              id="fName"
+              required
+            />
+
+            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+
+          <!--Middle Name-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>Middle Name</mat-label>
+            <input matInput class="input" />
+          </mat-form-field>
+
+          <!--Last Name-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>Last Name</mat-label>
+            <input
+              matInput
+              ngModel
+              [(ngModel)]="lName"
+              placeholder="Doe"
+              class="input"
+              formControlName="lName"
+              id="lName"
+              required
+            />
+            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <!--SSN-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="double"
+          >
+            <mat-label>SSN</mat-label>
+            <input
+              matInput
+              ngModel
+              [(ngModel)]="ssn"
+              placeholder="123-45-6789"
+              class="input"
+              maxlength="9"
+              formControlName="ssn"
+              id="ssn"
+              required
+            />
+            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+
+          <!--Birthday-->
+          <mat-form-field appearance="fill" class="double">
+            <mat-label>Birthday</mat-label>
+
+            <input
+              matInput
+              ngModel
+              [(ngModel)]="bday"
+              placeholder="MM/DD/YYYY"
+              class="input"
+              formControlName="bday"
+              id="bday"
+              required
+            />
+
+            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <!--Address-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            style="width: 100%"
+          >
+            <mat-label>Address</mat-label>
+
+            <input
+              matInput
+              placeholder="123 First Street"
+              class="input"
+              formControlName="addr"
+              required
+            />
+
+            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <!--City-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>City</mat-label>
+
+            <input
+              matInput
+              placeholder="Chicago"
+              class="input"
+              formControlName="city"
+              required
+            />
+
+            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+
+          <!--State-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>State</mat-label>
+            <mat-select formControlName="state" required>
+              <mat-option *ngFor="let o of options" value="option">
+                {{ o }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+
+          <!--Zip Code-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>Zip</mat-label>
+
+            <input
+              matInput
+              placeholder="55555"
+              class="input"
+              formControlName="zip"
+              required
+              maxlength="5"
+            />
+
+            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+        </div>
+
+        <hr />
+
+        <div class="form-group">
+          <p>Already have an account? <a routerLink="../signin">Sign in</a></p>
+          <div [align]="'end'">
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="jobInfo" errorMessage="Inputs missing">
+      <ng-template matStepLabel>Employment Information</ng-template>
+      <p>
+        Please tell us about your employment status. All fields are required.
+      </p>
+      <form [formGroup]="jobInfo">
+        <div class="form-group">
+          <!--Company Name-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="double"
+          >
+            <mat-label>Company Name</mat-label>
+
+            <input matInput class="input" formControlName="compName" required />
+
+            <mat-error *ngIf="jobInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+
+          <!--Company Phone Number-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="double"
+          >
+            <mat-label>Company Phone Number</mat-label>
+
+            <input
+              matInput
+              type="tel"
+              class="input"
+              formControlName="compPhone"
+              required
+            />
+
+            <mat-error *ngIf="jobInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <!--Salary-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>Annual Salary</mat-label>
+
+            <input
+              matInput
+              type="number"
+              class="input"
+              formControlName="salary"
+              required
+            />
+
+            <mat-error *ngIf="jobInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+
+          <!--Field of Employment-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>Field of Employment</mat-label>
+
+            <input matInput class="input" formControlName="field" required />
+
+            <mat-error *ngIf="jobInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+
+          <!--Start Date-->
+          <mat-form-field appearance="fill" class="triple">
+            <mat-label>Start Date</mat-label>
+
+            <input
+              matInput
+              placeholder="MM/DD/YYYY"
+              class="input"
+              formControlName="start"
+              class="input"
+              required
+            />
+
+            <mat-error *ngIf="jobInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+        </div>
+        <div [align]="'end'">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="refInfo" errorMessage="Inputs missing">
+      <ng-template matStepLabel>Contacts</ng-template>
+      <p>Please provide two reference contacts.</p>
+      <h3>Contact 1</h3>
+      <form [formGroup]="refInfo">
+        <div class="form-group" style="display: inline-block; width: 100%">
+          <!--Contact 1 First Name-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>First Name</mat-label>
+
+            <input
+              matInput
+              placeholder="John"
+              class="input"
+              formControlName="fName1"
+              required
+            />
+
+            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+
+          <!--Contact 1 Last Name-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>Last Name</mat-label>
+
+            <input
+              matInput
+              placeholder="Doe"
+              class="input"
+              formControlName="lName1"
+              required
+            />
+
+            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+
+          <!--Contact 1 Phone Number-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>Phone Number</mat-label>
+
+            <input
+              matInput
+              type="tel"
+              class="input"
+              formControlName="phone1"
+              required
+            />
+
+            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox color="primary">Secondary Account Access</mat-checkbox>
+        </div>
+      </form>
+      <hr />
+      <h3>Contact 2</h3>
+      <form [formGroup]="refInfo">
+        <div class="form-group" style="display: inline-block; width: 100%">
+          <!--Contact 2 First Name-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>First Name</mat-label>
+
+            <input
+              matInput
+              placeholder="John"
+              class="input"
+              formControlName="fName2"
+              required
+            />
+
+            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+
+          <!--Contact 2 Last Name-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>Last Name</mat-label>
+
+            <input
+              matInput
+              placeholder="Doe"
+              class="input"
+              formControlName="lName2"
+              required
+            />
+
+            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+
+          <!--Contact 2 Phone Number-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            class="triple"
+          >
+            <mat-label>Phone Number</mat-label>
+
+            <input
+              matInput
+              type="tel"
+              class="input"
+              formControlName="phone2"
+              required
+            />
+
+            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-checkbox color="primary">Secondary Account Access</mat-checkbox>
+        </div>
+      </form>
+      <div [align]="'end'">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext >Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="loginInfo" errorMessage="Inputs missing">
+      <ng-template matStepLabel>Login Information</ng-template>
+      <p>Please enter your preferred login credentials.</p>
+      <form [formGroup]="loginInfo">
+
+        <div class="form-group">
+          <!--Username-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            style="width: 100%"
+          >
+            <mat-label>Username</mat-label>
+
+            <input
+              matInput
+              ngModel
+              [(ngModel)]="uName"
+              placeholder="Username"
+              class="input"
+              formControlName="uName"
+              id="uName"
+              required
+            />
+
+            <mat-error *ngIf="loginInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <!--Password-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            style="width: 100%"
+          >
+            <mat-label>Password</mat-label>
+
+            <input
+              matInput
+              ngModel
+              [(ngModel)]="psw"
+              placeholder="Password"
+              type="password"
+              formControlName="psw"
+              id="psw"
+              required
+            />
+
+            <mat-error *ngIf="loginInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <!--Confirm Password-->
+          <mat-form-field
+            appearance="fill"
+            [floatLabel]="'auto'"
+            style="width: 100%"
+          >
+            <mat-label>Confirm Password</mat-label>
+
+            <input
+              matInput
+              ngModel
+              [(ngModel)]="confPsw"
+              placeholder="Confirm Password"
+              type="password"
+              formControlName="confPsw"
+              id="confPsw"
+              required
+            />
+
+            <mat-error *ngIf="loginInfo.invalid"> Required </mat-error>
+          </mat-form-field>
+        </div>
+          
+      </form>
+      <div [align]="'end'">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext type="submit">Submit</button>
+      </div>
+    </mat-step>
+
+  </mat-stepper>
+</div>
+
+</form>

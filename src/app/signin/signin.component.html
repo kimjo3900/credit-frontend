@@ -1,0 +1,46 @@
+
+  <div
+    class="border d-flex form-box align-items-center justify-content-center"
+    style="height: 50%"
+  >
+
+  <form class="form" (ngSubmit)="onSignin(signinForm)" #signinForm="ngForm">
+
+      <div class="form-group">
+        <h2 class="text-center">Sign in</h2>
+      </div>
+
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          id="username"
+          placeholder="Username"
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+        />
+      </div>
+
+      <div class="row">
+        <div class="text-center col-sm-12">
+          <button class="btn btn-primary" type="submit">Sign In</button>
+          <button class="btn btn-danger" routerLink="">Cancel</button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>

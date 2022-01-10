@@ -16,3 +16,6 @@ a {
 a.signin:hover {
   box-shadow: 0 0 11px rgba(255, 255, 255, 1);
 }
+.dropdown-toggle::after {
+  display: none;
+}

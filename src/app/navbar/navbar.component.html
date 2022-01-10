@@ -2,11 +2,21 @@
   <div>
     <h1><a routerLink="/">L.R. Jenkins Financial</a></h1>
   </div>
-  <div>
-    <a mat-raised-button color="accent" class="signin" routerLink="signin"
-      >Sign In</a
-    >
-    <a mat-button routerLink="register">Apply</a>
-    <a mat-button routerLink="help"><mat-icon>info</mat-icon></a>
+  <div class="row">
+    <div class="col">
+      <a mat-raised-button color="accent" class="signin" routerLink="signin">
+        Sign In
+      </a>
+      <a mat-button routerLink="register">Apply</a>
+      <div ngbDropdown class="d-inline-block">
+        <button mat-button ngbDropdownToggle style="color: white">
+          <mat-icon>reorder</mat-icon>
+        </button>
+        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+          <button ngbDropdownItem>Contact Us</button>
+          <button ngbDropdownItem routerLink="help">Help</button>
+        </div>
+      </div>
+    </div>
   </div>
 </mat-toolbar>

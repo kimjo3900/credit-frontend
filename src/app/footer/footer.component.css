@@ -1,0 +1,11 @@
+.navbar {
+  justify-content: space-between;
+  background-color: #1d1e1f;
+  color: white;
+}
+.legal {
+  font-size: small;
+}
+.icon-display {
+  transform: scale(0.8);
+}
