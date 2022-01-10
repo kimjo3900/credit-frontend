@@ -3,12 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-aws-cognito-auth-demo": {
+    "credit-card": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "style": "sass"
-        },
         "@schematics/angular:application": {
           "strict": true
         }
@@ -30,7 +27,6 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
@@ -95,13 +91,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "inlineStyleLanguage": "sass",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass",
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
