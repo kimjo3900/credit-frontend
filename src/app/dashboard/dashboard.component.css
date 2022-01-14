@@ -1,1 +1,55 @@
+.dashboard {
+    background-color: hsl(0, 0%, 30%);
+    width: 40%;
+    padding-bottom: 2%;
+    padding-top: 2%;
+    height: 1200px;
+    border-style: solid;
+    border-width: thin;
+    border-color: slateblue;
+  }
+  hr {
+    background-color: lightgrey;
+  }
+  .balance:before {
+    content: "\2022";
+    color: slateblue;
+    font-size: xx-large;
+    vertical-align: middle;
+  }
+  .credit:before {
+    content: "\2022";
+    color: white;
+    font-size: xx-large;
+    vertical-align: middle;
+  }
+  table {
+    width: 100%;
+    background-color: lightgray;
+  }
+  
+  .title {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cdk-overlay-container {
+    position: fixed;
+    z-index: 10000;
+  }
 
+  .arrow {
+    border: solid white;;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+  }
+  
+  .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  
+  .left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
