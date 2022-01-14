@@ -33,16 +33,14 @@
       </span>
       <span style="cursor: pointer; color: white; float:right" (click)= "goForwardMonth()">
         Next Month<i class="arrow right"></i>
-        <span style="width:10px; display:inline-block"></span>
-        <button mat-raised-button color="primary" (click)="goCurrentMonth()">
-          Current Month
-        </button>
       </span>
+      <span style="width:10px; display:inline-block"></span>
+      <button mat-raised-button color="primary" (click)="goCurrentMonth()">
+          Current Month
+      </button>
     </div>
+    <p></p>
     
-
-
-
     <table mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0">
       <!-- Date Column -->
       <ng-container matColumnDef="date">
@@ -62,16 +60,13 @@
         <td mat-cell *matCellDef="let element">${{ element.amount }}</td>
       </ng-container>
 
-
-      <!-- Would be nice to move this section down a bit so that it
-      doesn't overlap the nav buttons if the table is empty-->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
     <div *ngIf="dataSource.length === 0">
       <div style="background-color: lightgray">
-        <p>There are no transactions to show for this time</p>
+        <p>There are no transactions for this month</p>
       </div>
     </div>
   </div>

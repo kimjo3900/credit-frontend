@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationDetails, CognitoUser, CognitoUserPool } from 'amazon-cognito-identity-js';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signin',
@@ -45,7 +47,7 @@ export class SigninComponent implements OnInit {
       var cognitoUser = new CognitoUser(userData);
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: (result) => {
-          this.router.navigate(["dashboard"])
+          this.router.navigate(["dashboard", this.username])
         },
       
         onFailure: (err) => {

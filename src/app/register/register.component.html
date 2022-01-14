@@ -1,5 +1,4 @@
-<form id="signup" (submit)="onSignup(signupForm)" #signupForm="ngForm">
-
+<app-navbar-simple></app-navbar-simple>
 <div
   class="container d-flex form-box align-items-center justify-content-center"
 >
@@ -13,7 +12,7 @@
         required unless otherwise stated.
       </p>
 
-      <form [formGroup]="basicInfo">
+      <form [formGroup]="basicInfo" #basic="ngForm">
         <div class="form-group" style="display: inline-block; width: 100%">
           <!--First Name-->
           <mat-form-field
@@ -25,15 +24,21 @@
             <input
               matInput
               ngModel
-              [(ngModel)]="fName"
+              [(ngModel)]="fname"
               placeholder="John"
               class="input"
-              formControlName="fName"
-              id="fName"
+              formControlName="fname"
+              name="fname"
+              id="fname"
               required
             />
 
-            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+           <mat-error *ngIf="g['fname'].errors && (g['fname'].dirty || g['fname'].touched)">
+              <mat-error *ngIf="g['fname'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="g['fname'].errors['pattern']">
+                Allowed characters include letters, spaces, and hyphens only
+              </mat-error>
+            </mat-error>
           </mat-form-field>
 
           <!--Middle Name-->
@@ -56,14 +61,20 @@
             <input
               matInput
               ngModel
-              [(ngModel)]="lName"
+              [(ngModel)]="lname"
               placeholder="Doe"
               class="input"
-              formControlName="lName"
-              id="lName"
+              formControlName="lname"
+              name="lname"
+              id="lname"
               required
             />
-            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="g['lname'].errors && (g['lname'].dirty || g['lname'].touched)">
+              <mat-error *ngIf="g['lname'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="g['lname'].errors['pattern']">
+                Allowed characters include letters, spaces, and hyphens only
+              </mat-error>
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -77,16 +88,19 @@
             <mat-label>SSN</mat-label>
             <input
               matInput
-              ngModel
-              [(ngModel)]="ssn"
               placeholder="123-45-6789"
               class="input"
               maxlength="9"
               formControlName="ssn"
-              id="ssn"
+              type="number"
               required
             />
-            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="g['ssn'].errors && (g['ssn'].dirty || g['ssn'].touched)">
+              <mat-error *ngIf="g['ssn'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="g['ssn'].errors['pattern']">
+                Must contain exactly 9 digits
+              </mat-error>
+            </mat-error>
           </mat-form-field>
 
           <!--Birthday-->
@@ -94,17 +108,23 @@
             <mat-label>Birthday</mat-label>
 
             <input
-              matInput
-              ngModel
-              [(ngModel)]="bday"
-              placeholder="MM/DD/YYYY"
-              class="input"
-              formControlName="bday"
-              id="bday"
-              required
+            matInput
+            [matDatepicker]="dp3"
+            formControlName="bday"
+            class="unstyled"
+            required
             />
 
-            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dp3"
+            ></mat-datepicker-toggle>
+
+            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+
+            <mat-error *ngIf="basicInfo.invalid"> 
+              Enter a valid date 
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -113,7 +133,7 @@
           <mat-form-field
             appearance="fill"
             [floatLabel]="'auto'"
-            style="width: 100%"
+            style="width: 99%"
           >
             <mat-label>Address</mat-label>
 
@@ -121,7 +141,9 @@
               matInput
               placeholder="123 First Street"
               class="input"
-              formControlName="addr"
+              formControlName="address"
+              name="address"
+              id="address"
               required
             />
 
@@ -142,6 +164,8 @@
               placeholder="Chicago"
               class="input"
               formControlName="city"
+              name="city"
+              id="city"
               required
             />
 
@@ -155,8 +179,12 @@
             class="triple"
           >
             <mat-label>State</mat-label>
-            <mat-select formControlName="state" required>
-              <mat-option *ngFor="let o of options" value="option">
+            <mat-select
+            formControlName="state"
+            name="state"
+            id="state"
+            required>
+              <mat-option *ngFor="let o of options" value={{o}}>
                 {{ o }}
               </mat-option>
             </mat-select>
@@ -177,20 +205,44 @@
               placeholder="55555"
               class="input"
               formControlName="zip"
+              type="number"
               required
-              maxlength="5"
             />
 
-            <mat-error *ngIf="basicInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="g['zip'].errors && (g['zip'].dirty || g['zip'].touched)">
+              <mat-error *ngIf="g['zip'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="g['zip'].errors['pattern']">
+                Must contain exactly 5 digits
+              </mat-error>
+            </mat-error>
           </mat-form-field>
-        </div>
 
+          <!--Balance-->
+          <input
+            formControlName="balance"
+            type="hidden"
+          />
+
+          <!--Remaining Credit-->
+          <input
+            formControlName="remainingCredit"
+            type="hidden"
+          />
+
+          <!--Username-->
+          <input
+            formControlName="username"
+            type="hidden"
+          />
+
+        </div>
         <hr />
 
         <div class="form-group">
           <p>Already have an account? <a routerLink="../signin">Sign in</a></p>
           <div [align]="'end'">
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button routerLink="">Cancel</button>
+            <button mat-button matStepperNext type="button">Next</button>
           </div>
         </div>
       </form>
@@ -229,10 +281,16 @@
               type="tel"
               class="input"
               formControlName="compPhone"
+              type="number"
               required
             />
 
-            <mat-error *ngIf="jobInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="i['compPhone'].errors && (i['compPhone'].dirty || i['compPhone'].touched)">
+              <mat-error *ngIf="i['compPhone'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="i['compPhone'].errors['pattern']">
+                Must contain exactly 10 digits
+              </mat-error>
+            </mat-error>
           </mat-form-field>
         </div>
         <div class="form-group">
@@ -274,21 +332,29 @@
 
             <input
               matInput
-              placeholder="MM/DD/YYYY"
-              class="input"
+              [matDatepicker]="dp2"
               formControlName="start"
-              class="input"
+              class="unstyled"
               required
             />
 
-            <mat-error *ngIf="jobInfo.invalid"> Required </mat-error>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dp2"
+            ></mat-datepicker-toggle>
+
+            <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+
+
+            <mat-error *ngIf="jobInfo.invalid"> Enter a valid date </mat-error>
           </mat-form-field>
         </div>
         <div [align]="'end'">
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button routerLink="">Cancel</button>
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-button matStepperNext type="button">Next</button>
         </div>
-      </form>
+      </form>  
     </mat-step>
 
     <mat-step [stepControl]="refInfo" errorMessage="Inputs missing">
@@ -313,7 +379,12 @@
               required
             />
 
-            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="h['fName1'].errors && (h['fName1'].dirty || h['fName1'].touched)">
+              <mat-error *ngIf="h['fName1'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="h['fName1'].errors['pattern']">
+                Allowed characters include letters, spaces, and hyphens only
+              </mat-error>
+            </mat-error>
           </mat-form-field>
 
           <!--Contact 1 Last Name-->
@@ -332,7 +403,12 @@
               required
             />
 
-            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="h['lName1'].errors && (h['lName1'].dirty || h['lName1'].touched)">
+              <mat-error *ngIf="h['lName1'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="h['lName1'].errors['pattern']">
+                Allowed characters include letters, spaces, and hyphens only
+              </mat-error>
+            </mat-error>
           </mat-form-field>
 
           <!--Contact 1 Phone Number-->
@@ -348,20 +424,24 @@
               type="tel"
               class="input"
               formControlName="phone1"
+              type="number"
               required
             />
 
-            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="h['phone1'].errors && (h['phone1'].dirty || h['phone1'].touched)">
+              <mat-error *ngIf="h['phone1'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="h['phone1'].errors['pattern']">
+                Must contain exactly 10 digits
+              </mat-error>
+            </mat-error>
           </mat-form-field>
         </div>
 
         <div class="form-group">
           <mat-checkbox color="primary">Secondary Account Access</mat-checkbox>
         </div>
-      </form>
       <hr />
       <h3>Contact 2</h3>
-      <form [formGroup]="refInfo">
         <div class="form-group" style="display: inline-block; width: 100%">
           <!--Contact 2 First Name-->
           <mat-form-field
@@ -379,7 +459,12 @@
               required
             />
 
-            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="h['fName2'].errors && (h['fName2'].dirty || h['fName2'].touched)">
+              <mat-error *ngIf="h['fName2'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="h['fName2'].errors['pattern']">
+                Allowed characters include letters, spaces, and hyphens only
+              </mat-error>
+            </mat-error>
           </mat-form-field>
 
           <!--Contact 2 Last Name-->
@@ -398,7 +483,12 @@
               required
             />
 
-            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="h['lName2'].errors && (h['lName2'].dirty || h['lName2'].touched)">
+              <mat-error *ngIf="h['lName2'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="h['lName2'].errors['pattern']">
+                Allowed characters include letters, spaces, and hyphens only
+              </mat-error>
+            </mat-error>
           </mat-form-field>
 
           <!--Contact 2 Phone Number-->
@@ -414,27 +504,33 @@
               type="tel"
               class="input"
               formControlName="phone2"
+              type="number"
               required
             />
 
-            <mat-error *ngIf="refInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="h['phone2'].errors && (h['phone2'].dirty || h['phone2'].touched)">
+              <mat-error *ngIf="h['phone2'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="h['phone2'].errors['pattern']">
+                Must contain exactly 10 digits
+              </mat-error>
+            </mat-error>
           </mat-form-field>
         </div>
         <div class="form-group">
           <mat-checkbox color="primary">Secondary Account Access</mat-checkbox>
         </div>
-      </form>
+      </form>  
       <div [align]="'end'">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext >Next</button>
+        <button mat-button routerLink="">Cancel</button>
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
       </div>
     </mat-step>
 
     <mat-step [stepControl]="loginInfo" errorMessage="Inputs missing">
       <ng-template matStepLabel>Login Information</ng-template>
       <p>Please enter your preferred login credentials.</p>
-      <form [formGroup]="loginInfo">
-
+      <form [formGroup]="loginInfo" (ngSubmit)="onSignup()" #login="ngForm">
         <div class="form-group">
           <!--Username-->
           <mat-form-field
@@ -479,7 +575,10 @@
               required
             />
 
-            <mat-error *ngIf="loginInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="f['psw'].errors && (f['psw'].dirty || f['psw'].touched)">
+              <mat-error *ngIf="f['psw'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="f['psw'].errors['minlength']">Password must be at least 8 characters</mat-error>
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -503,18 +602,31 @@
               required
             />
 
-            <mat-error *ngIf="loginInfo.invalid"> Required </mat-error>
+            <mat-error *ngIf="f['confPsw'].errors && (f['confPsw'].dirty || f['confPsw'].touched)">
+              <mat-error *ngIf="f['confPsw'].errors['required']">Required</mat-error>
+              <mat-error *ngIf="f['confPsw'].errors['matching']">Password and Confirm Password must match</mat-error>
+            </mat-error>
           </mat-form-field>
         </div>
-          
+
+        <mat-checkbox color="primary" formControlName="cBox">
+          I agree to our
+          <a routerLink="../terms" target="_blank">Terms of Service</a>
+        </mat-checkbox>
+        <div *ngIf="loginInfo.hasError('required', 'cBox')">
+        </div>
       </form>
+        
       <div [align]="'end'">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext type="submit">Submit</button>
+        <button mat-button routerLink="">Cancel</button>
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button 
+          mat-button 
+          matStepperNext 
+          type="button"
+          (click)="login.ngSubmit.emit()"
+          [disabled]="basicInfo.invalid || jobInfo.invalid || refInfo.invalid || loginInfo.invalid">Submit</button>
       </div>
     </mat-step>
-
   </mat-stepper>
 </div>
-
-</form>

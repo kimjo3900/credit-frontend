@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -5,21 +6,22 @@ import {
   FormControl,
   FormGroup,
   Validators,
-  NgForm
+  NgForm,
+  AbstractControl,
 } from '@angular/forms';
 import { CognitoUserPool,CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import CustomValidators from '../providers/CustomValidators';
+import { Customer } from '../customer/customer';
+import { CustomerService } from '../customer/customer.service';
 
 interface formDataInterface {
   "given_name": string;
   "family_name": string;
   "preferred_username": string;
-  "birthdate": string;
-  "custom:ssn": string;
   [key: string]: string;
 };
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -33,14 +35,17 @@ interface formDataInterface {
 })
 export class RegisterComponent implements OnInit {
   basicInfo = new FormGroup({
-    fName: new FormControl(),
-    lName: new FormControl(),
+    fname: new FormControl(),
+    lname: new FormControl(),
     ssn: new FormControl(),
     bday: new FormControl(),
-    addr: new FormControl(),
+    address: new FormControl(),
     city: new FormControl(),
     state: new FormControl(),
     zip: new FormControl(),
+    balance: new FormControl(),
+    remainingCredit: new FormControl(),
+    username: new FormControl(),
   });
 
   jobInfo = new FormGroup({
@@ -64,22 +69,17 @@ export class RegisterComponent implements OnInit {
     uName: new FormControl(),
     psw: new FormControl(),
     confPsw: new FormControl(),
+    cBox: new FormControl(),
   });
 
-  // Need to edit this later so that username and password take user-given values
   isLoading:boolean = false;
-  fName:string = '';
-  lName:string = '';
+  fname:string = '';
+  lname:string = '';
   uName:string = '';
-  bday:string = '';
-  ssn:string = '';
   psw:string = '';
   confPsw:string = '';
 
-  // For testing purposes
   submitted = false;
-
-
 
   options: string[] = [
     'Alabama',
@@ -134,73 +134,102 @@ export class RegisterComponent implements OnInit {
     'Wyoming',
   ];
 
-  constructor(private _formBuilder: FormBuilder, private router: Router) {}
+  constructor(private _formBuilder: FormBuilder, private router: Router, private customerService: CustomerService) {}
 
   ngOnInit() {
     this.basicInfo = this._formBuilder.group({
-      fName: ['', Validators.required],
-      lName: ['', Validators.required],
-      ssn: ['', Validators.required],
+      fname: ['', [Validators.required, Validators.pattern('[a-zA-Z\- ]*')]],
+      lname: ['', [Validators.required, Validators.pattern('[a-zA-Z\- ]*')]],
+      ssn: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
       bday: ['', Validators.required],
-      addr: ['', Validators.required],
+      address: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zip: ['', Validators.required],
+      zip: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
+      balance: [0],
+      remainingCredit: [1000],
+      username: ['']
     });
     this.jobInfo = this._formBuilder.group({
       compName: ['', Validators.required],
-      compPhone: ['', Validators.required],
+      compPhone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       salary: ['', Validators.required],
       field: ['', Validators.required],
       start: ['', Validators.required],
     });
     this.refInfo = this._formBuilder.group({
-      fName1: ['', Validators.required],
-      lName1: ['', Validators.required],
-      phone1: ['', Validators.required],
-      fName2: ['', Validators.required],
-      lName2: ['', Validators.required],
-      phone2: ['', Validators.required],
+      fName1: ['', [Validators.required, Validators.pattern('[a-zA-Z\- ]*')]],
+      lName1: ['', [Validators.required, Validators.pattern('[a-zA-Z\- ]*')]],
+      phone1: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      fName2: ['', [Validators.required, Validators.pattern('[a-zA-Z\- ]*')]],
+      lName2: ['', [Validators.required, Validators.pattern('[a-zA-Z\- ]*')]],
+      phone2: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
     });
     this.loginInfo = this._formBuilder.group({
       uName: ['', Validators.required],
-      psw: ['', Validators.required],
+      psw: ['', [
+        Validators.required,
+        Validators.minLength(8)
+      ]],
       confPsw: ['', Validators.required],
-    });
+      cBox: [false, Validators.requiredTrue]
+    },
+      {
+      validators: [CustomValidators.match('psw', 'confPsw')]
+      }
+    ); 
   }
 
-  onSignup(form: NgForm){
+  // convenience getters for easy access to form fields
+  get f(): { [key: string]: AbstractControl } {
+    return this.loginInfo.controls;
+  }
+
+  get g(): { [key: string]: AbstractControl } {
+    return this.basicInfo.controls;
+  }
+
+  get h(): { [key: string]: AbstractControl } {
+    return this.refInfo.controls;
+  }
+
+  get i(): { [key: string]: AbstractControl } {
+    return this.jobInfo.controls;
+  }
+
+  onSignup() {
     this.submitted = true;
-    
-    if (form.valid) {
+
+    if (this.loginInfo.valid) {
       this.isLoading = true;
+
       var poolData = {
        UserPoolId: environment.cognitoUserPoolId, // Your user pool id here
        ClientId: environment.cognitoAppClientId // Your client id here
-     };
+     }
+
+     var attributeList = [];
 
      var userPool = new CognitoUserPool(poolData);
-     
-     var attributeList = [];
-     
      let formData:formDataInterface = {
-       "given_name": this.fName,
-       "family_name": this.lName,
-       "preferred_username": this.uName,
-       "birthdate": this.bday,
-       "custom:ssn": this.ssn
+       "given_name": this.fname,
+       "family_name": this.lname,
+       "preferred_username": this.uName
      }
 
-     for (let key  in formData) {
-       let attrData = {
-         Name: key,
-         Value: formData[key]
-       }
-       console.log(attrData)
-       let attribute = new CognitoUserAttribute(attrData);
-       attributeList.push(attribute)
-     }
-     console.log(attributeList)
+    attributeList.push(new CognitoUserAttribute({
+      Name: "given_name",
+      Value: this.fname
+    }));
+    attributeList.push(new CognitoUserAttribute({
+     Name: "family_name",
+     Value: this.lname
+   })); 
+    attributeList.push(new CognitoUserAttribute({
+      Name: "preferred_username",
+      Value: this.uName
+    }));
+
      userPool.signUp(this.uName, this.psw, attributeList, [], (
        err,
        result
@@ -210,6 +239,22 @@ export class RegisterComponent implements OnInit {
          alert(err.message || JSON.stringify(err));
          return;
        }
+
+       // Assign username to have a value of this.uName
+       this.basicInfo.value.username = this.uName;
+
+       // If user is successfully admitted into user pool, then create
+       // customer entry in database
+       console.log(this.basicInfo.value);
+       this.customerService.addCustomer(this.basicInfo.value).subscribe(
+        (response: Customer) => {
+          this.customerService.getCustomers();
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+
        this.router.navigate(['/signin']);
      });
     }
@@ -219,3 +264,4 @@ export class RegisterComponent implements OnInit {
  }
 
 }
+

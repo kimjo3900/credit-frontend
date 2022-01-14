@@ -1,1 +1,28 @@
-<p>contact works!</p>
+<app-navbar></app-navbar>
+<div
+  class="container contact align-items-center justify-content-center"
+  style="width: 30%"
+>
+  <form>
+    <h1 [align]="'center'">We are here to help</h1>
+    <div [align]="'center'">
+      <mat-form-field appearance="fill" [floatLabel]="'auto'" class="double">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="Jane" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" [floatLabel]="'auto'" class="double">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Doe" />
+      </mat-form-field>
+    </div>
+    <div [align]="'center'">
+      <mat-form-field appearance="fill" style="width: 80%">
+        <mat-label>Comment</mat-label>
+        <textarea matInput style="height: 5rem"></textarea>
+      </mat-form-field>
+    </div>
+    <div [align]="'center'">
+      <a mat-raised-button color="primary" style="text-decoration: none" href="javascript:history.back()">Submit</a>
+    </div>
+  </form>
+</div>

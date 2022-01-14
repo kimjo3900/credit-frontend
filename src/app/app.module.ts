@@ -28,6 +28,16 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ContactComponent } from './contact/contact.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTableModule } from '@angular/material/table';
+import { HelpComponent } from './help/help.component';
+import { NavbarDashComponent } from './navbar-dash/navbar-dash.component';
+import { NavbarSimpleComponent } from './navbar-simple/navbar-simple.component';
+import { HttpClientModule } from '@angular/common/http';
+import { TermsComponent } from './terms/terms.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { StatementsComponent } from './statements/statements.component';
 
 const MaterialComponents = [
   BrowserModule,
@@ -49,6 +59,9 @@ const MaterialComponents = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatAutocompleteModule,
+  MatProgressBarModule,
+  MatTableModule,
+  MatSnackBarModule,
 ];
 
 @NgModule({
@@ -62,8 +75,14 @@ const MaterialComponents = [
     RegisterComponent,
     FooterComponent,
     DashboardComponent,
+    ContactComponent,
+    HelpComponent,
+    NavbarDashComponent,
+    NavbarSimpleComponent,
+    TermsComponent,
+    StatementsComponent,
   ],
-  imports: [MaterialComponents, NgbModule],
+  imports: [MaterialComponents, NgbModule, HttpClientModule],
   exports: [MaterialComponents],
   providers: [],
   bootstrap: [AppComponent],

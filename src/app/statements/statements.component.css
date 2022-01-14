@@ -1,0 +1,27 @@
+.row {
+  width: 100%;
+}
+.main {
+  background-color: white;
+}
+.core-info {
+  border-style: solid;
+  padding-top: 20px;
+  margin-right: 10%;
+}
+.top-right {
+  float: left;
+  font-weight: bold;
+  margin: auto;
+}
+
+.title {
+  margin-left: 10%;
+  text-align: left;
+}
+.row {
+  padding-top: 3%;
+}
+hr {
+  background-color: black;
+}

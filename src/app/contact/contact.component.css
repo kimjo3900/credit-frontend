@@ -1,1 +1,21 @@
-
+.contact {
+    height: auto;
+    margin-top: 5%;
+    background-color: lightgrey;
+    padding-bottom: 3em;
+  }
+  div {
+    padding-top: 3%;
+  }
+  h1 {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-variant: small-caps;
+    font-size: xxx-large;
+  }
+  .container .mat-form-field + .mat-form-field {
+    margin-left: 10px;
+  }
+  
+  .double {
+    width: 39%;
+  }

@@ -1,0 +1,12 @@
+* {
+  color: white;
+}
+.help {
+  height: auto;
+  margin-top: 5%;
+  background-color: hsl(0, 0%, 30%);
+  padding-bottom: 3em;
+}
+h1 {
+  text-align: center;
+}

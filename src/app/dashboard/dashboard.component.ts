@@ -115,21 +115,27 @@ export class DashboardComponent implements OnInit {
   }
 
   goForwardMonth(): void {
-    // Update Transaction vars
-    if (this.transactionMonth == 12) {
-      this.transactionMonth = 1;
-      this.transactionYear += 1;
+    // Display message if transactionMonth is already equal to currentMonth
+    if (this.transactionMonth == this.currentMonth && this.transactionYear == this.currentYear) {
+      //do nothing for now - implement this later
     }
-    else
-      this.transactionMonth++;
+    else {
+      // Update Transaction vars
+      if (this.transactionMonth == 12) {
+        this.transactionMonth = 1;
+        this.transactionYear += 1;
+      }
+      else
+        this.transactionMonth++;
 
-    // Update datasource
-    var arr: FinancialRecord[] = [];
-    for (var i=0; i<this.ELEMENT_DATA.length; i++) {
-      if (this.getMonth(this.ELEMENT_DATA[i].date) == this.transactionMonth && this.getYear(this.ELEMENT_DATA[i].date) == this.transactionYear)
-        arr.push(this.ELEMENT_DATA[i]);
+      // Update datasource
+      var arr: FinancialRecord[] = [];
+      for (var i=0; i<this.ELEMENT_DATA.length; i++) {
+        if (this.getMonth(this.ELEMENT_DATA[i].date) == this.transactionMonth && this.getYear(this.ELEMENT_DATA[i].date) == this.transactionYear)
+          arr.push(this.ELEMENT_DATA[i]);
+      }
+      this.dataSource = arr;
     }
-    this.dataSource = arr;
   }
 
   goCurrentMonth(): void {
