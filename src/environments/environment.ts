@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   cognitoUserPoolId: "us-east-1_DS8Ldn5Vm",
   cognitoAppClientId: "70s7l4pvqld7mpicl7btjovb9l",
-  apiBaseUrl: "http://localhost:5000"
-  //apiBaseUrl: "http://creditaccountcreation-test.eba-fabt3pxm.us-east-1.elasticbeanstalk.com"
+  //apiBaseUrl: "http://localhost:5000"
+  apiBaseUrl: "http://creditaccountcreation-test.eba-fabt3pxm.us-east-1.elasticbeanstalk.com"
 };
 
 /*
