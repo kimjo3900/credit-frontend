@@ -61,9 +61,25 @@ export class DashboardComponent implements OnInit {
     { date: this.formatDate(new Date(this.currentTime-7100000000)), biller: 'Walmart', amount: 56.65 },
   ];
 
-  constructor(private router: Router, private customerService: CustomerService, private route: ActivatedRoute, private toaster: MatSnackBar) { }
+  months: string[] = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
 
-  ngOnInit(): void {
+  constructor(private router: Router, 
+    private customerService: CustomerService, 
+    private route: ActivatedRoute, 
+    private toaster: MatSnackBar) {
     this.uName = <string>this.route.snapshot.paramMap.get('username');
 
     // attempt to get customer by uName
@@ -74,9 +90,20 @@ export class DashboardComponent implements OnInit {
         this.totalCredit = this.customer.balance + this.customer.remainingCredit;
         this.progress = this.customer.balance / this.totalCredit * 100;
 
+        // Send customer data to customer.service
+        this.customerService.setCustomer(this.customer);
+
+        // Send last month's transactions to customer.service
+        this.goBackMonth();
+        this.customerService.setStatementTransactions(this.dataSource);
+        this.customerService.setMonth(this.months[this.transactionMonth-1]);
+        this.customerService.setYear(this.transactionYear);
+        this.goCurrentMonth();
+
         // Populate transaction history if bob.jones
         if (this.uName == 'bob.jones') {
           var arr: FinancialRecord[] = [];
+
           for (var i=0; i<this.ELEMENT_DATA.length; i++) {
             if (this.getMonth(this.ELEMENT_DATA[i].date) == this.transactionMonth && this.getYear(this.ELEMENT_DATA[i].date) == this.transactionYear)
               arr.push(this.ELEMENT_DATA[i]);
@@ -92,6 +119,9 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  ngOnInit(): void {
+  }
+
   openSnackBar() {
     this.toaster.open('Bills Paid', 'Close');
   }
@@ -105,19 +135,20 @@ export class DashboardComponent implements OnInit {
     else
       this.transactionMonth--;
 
-    // Update datasource
-    var arr: FinancialRecord[] = [];
-    for (var i=0; i<this.ELEMENT_DATA.length; i++) {
-      if (this.getMonth(this.ELEMENT_DATA[i].date) == this.transactionMonth && this.getYear(this.ELEMENT_DATA[i].date) == this.transactionYear)
-        arr.push(this.ELEMENT_DATA[i]);
+    // Update datasource if bob.jones
+    if (this.uName == 'bob.jones') {
+      var arr: FinancialRecord[] = [];
+      for (var i=0; i<this.ELEMENT_DATA.length; i++) {
+        if (this.getMonth(this.ELEMENT_DATA[i].date) == this.transactionMonth && this.getYear(this.ELEMENT_DATA[i].date) == this.transactionYear)
+          arr.push(this.ELEMENT_DATA[i]);
+      }
+      this.dataSource = arr;
     }
-    this.dataSource = arr;
   }
 
   goForwardMonth(): void {
-    // Display message if transactionMonth is already equal to currentMonth
     if (this.transactionMonth == this.currentMonth && this.transactionYear == this.currentYear) {
-      //do nothing for now - implement this later
+      // Maybe grey out Next month and Current month buttons if transactionMonth is already equal to currentMonth
     }
     else {
       // Update Transaction vars
@@ -128,13 +159,15 @@ export class DashboardComponent implements OnInit {
       else
         this.transactionMonth++;
 
-      // Update datasource
-      var arr: FinancialRecord[] = [];
-      for (var i=0; i<this.ELEMENT_DATA.length; i++) {
-        if (this.getMonth(this.ELEMENT_DATA[i].date) == this.transactionMonth && this.getYear(this.ELEMENT_DATA[i].date) == this.transactionYear)
-          arr.push(this.ELEMENT_DATA[i]);
+      // Update datasource if bob.jones
+      if (this.uName == 'bob.jones') {
+        var arr: FinancialRecord[] = [];
+        for (var i=0; i<this.ELEMENT_DATA.length; i++) {
+          if (this.getMonth(this.ELEMENT_DATA[i].date) == this.transactionMonth && this.getYear(this.ELEMENT_DATA[i].date) == this.transactionYear)
+            arr.push(this.ELEMENT_DATA[i]);
+        }
+        this.dataSource = arr;
       }
-      this.dataSource = arr;
     }
   }
 
@@ -143,13 +176,15 @@ export class DashboardComponent implements OnInit {
     this.transactionMonth = this.currentMonth;
     this.transactionYear = this.currentYear;
 
-    // Update datasource
-    var arr: FinancialRecord[] = [];
-    for (var i=0; i<this.ELEMENT_DATA.length; i++) {
-      if (this.getMonth(this.ELEMENT_DATA[i].date) == this.transactionMonth && this.getYear(this.ELEMENT_DATA[i].date) == this.transactionYear)
-        arr.push(this.ELEMENT_DATA[i]);
+    // Update datasource if bob.jones
+    if (this.uName == 'bob.jones') {
+      var arr: FinancialRecord[] = [];
+      for (var i=0; i<this.ELEMENT_DATA.length; i++) {
+        if (this.getMonth(this.ELEMENT_DATA[i].date) == this.transactionMonth && this.getYear(this.ELEMENT_DATA[i].date) == this.transactionYear)
+          arr.push(this.ELEMENT_DATA[i]);
+      }
+      this.dataSource = arr;
     }
-    this.dataSource = arr;
   }
 
   onLogout(): void {
