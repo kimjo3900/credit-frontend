@@ -62,18 +62,18 @@ export class DashboardComponent implements OnInit {
   ];
 
   months: string[] = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
+    'JAN',
+    'FEB',
+    'MAR',
+    'APR',
+    'MAY',
+    'JUN',
+    'JUL',
+    'AUG',
+    'SEP',
+    'OCT',
+    'NOV',
+    'DEC'
   ];
 
   constructor(private router: Router, 
@@ -92,13 +92,21 @@ export class DashboardComponent implements OnInit {
 
         // Send customer data to customer.service
         this.customerService.setCustomer(this.customer);
+        this.customerService.setAccount(this.customer.id);
+        this.customerService.setBalance(this.customer.balance);
+        this.customerService.setTotCredit(this.totalCredit);
+        this.customerService.setAvailCredit(this.customer.remainingCredit);
 
         // Send last month's transactions to customer.service
         this.goBackMonth();
         this.customerService.setStatementTransactions(this.dataSource);
         this.customerService.setMonth(this.months[this.transactionMonth-1]);
-        this.customerService.setYear(this.transactionYear);
+        this.customerService.setPriorYear(this.transactionYear);
+
+        // Send current month & year
         this.goCurrentMonth();
+        this.customerService.setMonthNum(this.transactionMonth);
+        this.customerService.setCurrYear(this.transactionYear);
 
         // Populate transaction history if bob.jones
         if (this.uName == 'bob.jones') {

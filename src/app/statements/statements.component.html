@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col title">
       <div class="container sub">
-        <h1 style="font-weight: bold">YOUR {{month}} {{year}} STATEMENT</h1>
+        <h1 style="font-weight: bold">YOUR {{priorMonth}} {{priorYear}} STATEMENT</h1>
         <h4>{{customer.fname}} {{customer.lname}}</h4>
         <h4>{{customer.address}}</h4>
         <h4>{{customer.city}}, {{customer.state}}</h4>
@@ -14,17 +14,17 @@
         <div style="clear: both">
           <h3 class="top-right">Payment Due Date:</h3>
 
-          <h3 style="float: right">01/31/2022</h3>
+          <h3 style="float: right">{{currMonth}}/{{maxDays[currMonth-1]}}/{{currYear}}</h3>
         </div>
         <div style="clear: both">
           <h3 class="top-right">New Balance:</h3>
 
-          <h3 style="float: right">$1,865.48</h3>
+          <h3 style="float: right">${{balance}}</h3>
         </div>
         <div style="clear: both">
           <h3 class="top-right">Minimum Payment:</h3>
 
-          <h3 style="float: right">$50.00</h3>
+          <h3 style="float: right">{{minPayment}}</h3>
         </div>
       </div>
     </div>
@@ -37,21 +37,27 @@
           <h1>Account Summary</h1>
           <hr />
           <div style="clear: both">
-            <h3 class="label">Previous Balance:</h3>
+            <h3 class="label">Account Number:</h3>
 
-            <h3 style="float: right">$639.72</h3>
+            <h3 style="float: right">{{account}}</h3>
           </div>
 
           <div style="clear: both">
-            <h3 class="label">Payment Credits</h3>
+            <h3 class="label">Previous Balance:</h3>
 
-            <h3 style="float: right">-$639.72</h3>
+            <h3 style="float: right">{{prevBalance}}</h3>
+          </div>
+
+          <div style="clear: both">
+            <h3 class="label">Payment Credits:</h3>
+
+            <h3 style="float: right">{{paymentCredits}}</h3>
           </div>
 
           <div style="clear: both">
             <h3 class="label">Purchases:</h3>
 
-            <h3 style="float: right">$1,865</h3>
+            <h3 style="float: right">${{balance}}</h3>
           </div>
 
           <div style="clear: both">
@@ -81,7 +87,7 @@
           <div style="clear: both">
             <h3 class="label"><b>New Balance:</b></h3>
 
-            <h3 style="float: right"><b>$1,865.48</b></h3>
+            <h3 style="float: right"><b>${{balance}}</b></h3>
           </div>
 
           <div style="clear: both">
@@ -91,18 +97,18 @@
           <div style="clear: both">
             <h3 class="label">Opening/Closing Date:</h3>
 
-            <h3 style="float: right">01/01-01/31/2022</h3>
+            <h3 style="float: right">{{currMonth}}/1-{{currMonth}}/{{maxDays[currMonth-1]}}/{{currYear}}</h3>
           </div>
 
           <div style="clear: both">
             <h3 class="label">Credit Access Line:</h3>
 
-            <h3 style="float: right">$4,000.00</h3>
+            <h3 style="float: right">${{totCredit}}</h3>
           </div>
           <div style="clear: both">
             <h3 class="label">Available Credit:</h3>
 
-            <h3 style="float: right">$2,134.52</h3>
+            <h3 style="float: right">${{availCredit}}</h3>
           </div>
           <div style="clear: both">
             <h3 class="label">Cash Access Line:</h3>
@@ -122,17 +128,17 @@
         <div style="clear: both">
           <h3 class="label">Payment Due Date:</h3>
 
-          <h3 style="float: right">01/31/2022</h3>
+          <h3 style="float: right">{{currMonth}}/{{maxDays[currMonth-1]}}/{{currYear}}</h3>
         </div>
         <div style="clear: both">
           <h3 class="label">New Balance:</h3>
 
-          <h3 style="float: right">$1,865.48</h3>
+          <h3 style="float: right">${{balance}}</h3>
         </div>
         <div style="clear: both">
           <h3 class="label">Minimum Payment:</h3>
 
-          <h3 style="float: right">$50.00</h3>
+          <h3 style="float: right">{{minPayment}}</h3>
         </div>
         <div style="clear: both; text-align: left">
           <p>

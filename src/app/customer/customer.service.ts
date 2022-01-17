@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Customer } from './customer';
 
@@ -14,7 +14,13 @@ export class CustomerService {
     customer!: Customer;
     statementTransactions!: FinancialRecord[];
     month!: string;
-    year!: number;
+    monthNum!: number;
+    priorYear!: number;
+    currYear!: number;
+    account!: number;
+    balance!: number;
+    totCredit!: number;
+    availCredit!: number;
 
     constructor(private http: HttpClient) { }
 
@@ -38,7 +44,7 @@ export class CustomerService {
         return this.http.get<Customer>(`${this.apiServerUrl}/customer/find/${uName}`);
     }
 
-    // Getter and setter for currently signed in customer
+    // Getters and setters
     getCustomer(): Customer {
         return this.customer;
     }
@@ -47,7 +53,6 @@ export class CustomerService {
         this.customer = customer;
     }
 
-    // Getter and setter for last month's transactions to view on Statements page
     getStatementTransactions(): FinancialRecord[] {
         return this.statementTransactions;
     }
@@ -64,14 +69,62 @@ export class CustomerService {
         this.month = month;
     }
 
-    getYear(): number {
-        return this.year;
+    getMonthNum(): number {
+        return this.monthNum;
     }
 
-    setYear(year: number) {
-        this.year = year;
+    setMonthNum(month: number) {
+        this.monthNum = month;
     }
 
+    getPriorYear(): number {
+        return this.priorYear;
+    }
+
+    setPriorYear(year: number) {
+        this.priorYear = year;
+    }
+
+    getCurrYear(): number {
+        return this.currYear;
+    }
+
+    setCurrYear(year: number) {
+        this.currYear = year;
+    }
+
+    getAccount(): number {
+        return this.account;
+    }
+
+    setAccount(account: number) {
+        this.account = account;
+    }
+
+    getBalance(): number {
+        return this.balance;
+    }
+
+    setBalance(balance: number) {
+        this.balance = balance;
+    }
+
+
+    getTotCredit(): number {
+        return this.totCredit;
+    }
+
+    setTotCredit(totCredit: number) {
+        this.totCredit = totCredit;
+    }
+
+    getAvailCredit(): number {
+        return this.availCredit;
+    }
+
+    setAvailCredit(availCredit: number) {
+        this.availCredit = availCredit;
+    }
 
     handleError(handleError: any): Observable<never> {
         return throwError ('Method not implemented.');
