@@ -5,14 +5,14 @@
     <div class="row">
       <div class="col">
         <a mat-raised-button color="primary" class="signout" (click)="onLogout()"> Sign Out </a>
-        <a mat-button routerLink="statements">Statements</a>
+        <a mat-button routerLink="statements">View Statement</a>
         <div ngbDropdown class="d-inline-block">
           <button mat-button ngbDropdownToggle style="color: white">
             <mat-icon>reorder</mat-icon>
           </button>
           <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
-            <button ngbDropdownItem routerLink="../../../contact">Contact Us</button>
-            <button ngbDropdownItem routerLink="../../../help">Help</button>
+            <button ngbDropdownItem routerLink="/contact">Contact Us</button>
+            <button ngbDropdownItem routerLink="/help">Help</button>
           </div>
         </div>
       </div>
