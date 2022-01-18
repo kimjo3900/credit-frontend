@@ -9,6 +9,7 @@ import { CustomerService } from '../customer/customer.service';
 })
 export class StatementsComponent implements OnInit {
   customer!: Customer;
+  displayedColumns: string[] = ['date', 'biller', 'amount'];
   statementTransactions: FinancialRecord[] = [];
   priorMonth: string = '';
   priorYear!: number;

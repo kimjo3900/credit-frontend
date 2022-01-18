@@ -3,6 +3,7 @@
 }
 .main {
   background-color: white;
+  height: 1800px;
 }
 .core-info {
   border-style: solid;
@@ -24,4 +25,38 @@
 }
 hr {
   background-color: black;
+}
+.label {
+  float: left;
+}
+.content {
+  float: right;
+}
+
+.ytd {
+  border-style: solid;
+  padding-bottom: 1%;
+}
+.charges {
+  margin-bottom: -1%;
+  margin-right: 10%;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-header-cell {
+  border: none;
+  font-size: large;
+  color: black;
+}
+
+.mat-cell {
+  border: none;
+  font-size: medium;
+}
+
+.center {
+  text-align: center;
 }
