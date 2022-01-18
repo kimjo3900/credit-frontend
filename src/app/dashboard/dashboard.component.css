@@ -53,3 +53,35 @@
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
   }
+
+
+
+  .help {
+    background: rgb(160, 160, 160);
+    font-size: 18px;
+    border-radius: 100%;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+  }
+
+  .help .tooltip {
+    visibility: hidden;
+    width: 140px;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+  }
+
+  .help:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }

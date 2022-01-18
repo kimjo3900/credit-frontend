@@ -14,8 +14,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 
 export class DashboardComponent implements OnInit {
+
+  creditRanges: string = 
+  '300-579: Poor' + '\n' +
+  '580-669: Fair' + '\n' +
+  '670-739: Good' + '\n' +
+  '740-799: Very Good' + '\n' +
+  '800-850: Excellent';
+
   displayedColumns: string[] = ['date', 'biller', 'amount'];
-  dataSource!: FinancialRecord[];
+  dataSource: FinancialRecord[] = [];
 
   // get info about the current date
   currentDate = new Date();
@@ -118,8 +126,6 @@ export class DashboardComponent implements OnInit {
           }
           this.dataSource = arr;
         }
-        // Otherwise leave blank to simulate new customer
-        else this.dataSource = EMPTY_DATA;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -225,5 +231,3 @@ export interface FinancialRecord {
   biller: string;
   amount: number;
 }
-
-const EMPTY_DATA: FinancialRecord[] = [];

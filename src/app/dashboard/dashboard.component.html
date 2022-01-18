@@ -35,7 +35,7 @@
         <i class="arrow right"></i><i class="arrow right"></i>
       </span>
       <span style="cursor:pointer; float:right" (click)= "goForwardMonth()">
-        Next Month<i class="arrow right" ></i>&nbsp;&nbsp;&nbsp;
+        Next Month<i class="arrow right"></i>&nbsp;&nbsp;&nbsp;
       </span>
       <h3>
         {{months[transactionMonth-1]}} {{transactionYear}}
@@ -76,7 +76,16 @@
     <div style="background-color: lightgray">
       <h2>Your Credit Score</h2>
       <h4 style="color: green">777</h4>
-      <p>Very Good</p>
+      <div>
+        <span>Very Good&nbsp;&nbsp;</span>
+        <span class="help">&nbsp;?&nbsp;
+          <span class="tooltip" style="white-space: pre;">{{creditRanges}}</span>
+        </span>
+      </div>
+      
+
+      
+
     </div>
   </div>
 </div>
