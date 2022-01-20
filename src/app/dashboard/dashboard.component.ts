@@ -109,6 +109,7 @@ export class DashboardComponent implements OnInit {
         this.goBackMonth();
         this.customerService.setStatementTransactions(this.dataSource);
         this.customerService.setMonth(this.months[this.transactionMonth-1]);
+        this.customerService.setPriorMonth(this.transactionMonth);
         this.customerService.setPriorYear(this.transactionYear);
 
         // Send current month & year

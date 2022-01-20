@@ -12,6 +12,7 @@ export class StatementsComponent implements OnInit {
   displayedColumns: string[] = ['date', 'biller', 'amount'];
   statementTransactions: FinancialRecord[] = [];
   priorMonth: string = '';
+  priorMonthNum!: number;
   priorYear!: number;
   currMonth!: number;
   currYear!: number;
@@ -31,6 +32,7 @@ export class StatementsComponent implements OnInit {
     this.customer = customerService.getCustomer();
     this.statementTransactions = customerService.getStatementTransactions();
     this.priorMonth = customerService.getMonth();
+    this.priorMonthNum = customerService.getPriorMonth();
     this.priorYear = customerService.getPriorYear();
     this.currMonth = customerService.getMonthNum();
     this.currYear = customerService.getCurrYear();

@@ -14,6 +14,7 @@ export class CustomerService {
     customer!: Customer;
     statementTransactions!: FinancialRecord[];
     month!: string;
+    priorMonth!: number;
     monthNum!: number;
     priorYear!: number;
     currYear!: number;
@@ -75,6 +76,14 @@ export class CustomerService {
 
     setMonthNum(month: number) {
         this.monthNum = month;
+    }
+
+    getPriorMonth(): number {
+        return this.priorMonth;
+    }
+
+    setPriorMonth(month: number) {
+        this.priorMonth = month;
     }
 
     getPriorYear(): number {
