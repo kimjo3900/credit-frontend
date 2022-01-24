@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar-simple></app-navbar-simple>
   <div
     class="border d-flex form-box align-items-center justify-content-center"
     style="height: 50%"
@@ -41,6 +41,12 @@
         </div>
       </div>
 
+      <div [align]="'center'" style="margin-top: 2%">
+        <p>
+          Don't have an account yet?
+          <a routerLink="../register" style="color: dodgerblue">Apply Now!</a>
+        </p>
+      </div>
     </form>
 
   </div>
